@@ -5,12 +5,12 @@ Meteor.startup(() => {
   // code to run on server at startup
   if (peopleDB.find().count() <= 0) {
     peopleDB.insert({
-      name: "Despacito",
-      mail: "Wesh",
+      name: "Maël",
+      mail: "truc@gmail.com",
     });
     peopleDB.insert({
-      name: "Stairway to heaven",
-      mail: "Pas Wesh",
+      name: "Alex",
+      mail: "machin@hotmail.com",
     });
   }
 });
