@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App/App';
@@ -7,4 +8,6 @@ import './hello.html';
 import './peopleDB';
 import './main.html';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+Meteor.startup(() => {
+    ReactDOM.render(<App />, document.getElementById('root'));
+})
