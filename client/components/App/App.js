@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
-import Form from '../Form/Form';
-import Hello from '../Hello/Hello';
+import React from 'react';
+import HomePage from '../../pages/HomePage';
+import SinglePage from '../../pages/SinglePage';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <h1>Welcome to my big form !</h1>
-        <Form />
-        <Hello />
-      </div>
-    );
-  }
-}
+const App = () => (
+  <Router>
+    <div>
+      <Route exact path="/" component={HomePage} />
+      <Route path="/single/:id" component={SinglePage} />
+    </div>
+  </Router>
+)
 
 export default App;

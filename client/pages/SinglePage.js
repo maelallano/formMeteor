@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import peopleDB from '../../../imports/db/peopleDB';
+import peopleDB from '../../imports/db/peopleDB';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Link } from "react-router-dom";
 
-class Hello extends Component {
+class SinglePage extends Component {
     state = {
         inputName: '',
         inputMail: '',
     }
 
     handleClick = e => {
-        peopleDB.remove(e)
+        peopleDB.remove(e);
+        window.location.replace('/');
     }
 
     // nameInputChange = e => {
@@ -24,13 +26,12 @@ class Hello extends Component {
     // }
 
     render() {
+        const user = this.props.tasks.filter(task => task._id === this.props.match.params.id)[0];
+        const displayed = user ? <p key={user._id}>Name: { user.name }, mail: { user.mail } <button onClick={() => this.handleClick(user._id)}>REMOVE</button></p> : <span>LOADING</span>
         return (
             <div name="hello">
-                <ul>
-                    {this.props.tasks.map(p => (
-                        <li key={p._id}>Name: <input onChange={this.nameInputChange} value={ p.name }/>, mail: <input onChange={this.mailInputChange} value={ p.mail }/> <button key={p._id} onClick={() => this.handleClick(p._id)}>X</button></li>
-                    ))}
-                </ul>
+                <Link to='/'>Back home</Link>
+                {displayed}
             </div>
         )
     }
@@ -40,4 +41,4 @@ export default withTracker(() => {
     return {
       tasks: peopleDB.find({}).fetch(),
     };
-})(Hello);
+})(SinglePage);
