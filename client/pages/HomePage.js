@@ -10,7 +10,7 @@ const HomePage = ({ tasks }) => (
         <Form />
         <ul>
             {tasks.map(p => (
-                <li key={p._id}>Name: { p.name }, mail: { p.mail } <Link to={`/single/${p._id}`}>Click here please</Link></li>
+                <li key={p._id}>Name: { p.name }, mail: { p.mail }, role: { p.role } <Link to={`/single/${p._id}`}>Click here please</Link></li>
             ))}
         </ul>
     </div>

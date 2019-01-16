@@ -7,10 +7,12 @@ Meteor.startup(() => {
     peopleDB.insert({
       name: "Maël",
       mail: "truc@gmail.com",
+      role: "ADMIN",
     });
     peopleDB.insert({
       name: "Alex",
       mail: "machin@hotmail.com",
+      role: "USER",
     });
   }
 });
