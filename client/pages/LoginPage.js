@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import peopleDB from '../../imports/db/peopleDB';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from "react-router-dom";
-import { setCookie } from '../helpers/utils.js';
+import { setCookie, getCookie } from '../helpers/utils.js';
 
 class LoginPage extends Component {
     constructor() {
@@ -14,6 +14,12 @@ class LoginPage extends Component {
         this.state = {
             isFormSignIn: true,
             isChecked: false,
+        }
+    }
+
+    componentDidMount() {
+        if (getCookie('login')) {
+            window.location.replace(`/single/${JSON.parse(getCookie('login'))._id}`);
         }
     }
 

@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import peopleDB from '../../imports/db/peopleDB';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from "react-router-dom";
+import { getCookie } from '../helpers/utils.js';
 
 class SinglePage extends Component {
     state = {
         inputName: '',
         inputMail: '',
         isEdit: false,
+    }
+
+    componentDidMount() {
+        if (!getCookie('login')) {
+           window.location.replace(`/login`);
+        }
     }
 
     handleClick = e => {
