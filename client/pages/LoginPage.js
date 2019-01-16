@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import peopleDB from '../../imports/db/peopleDB';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from "react-router-dom";
+import { setCookie } from '../helpers/utils.js';
 
 class LoginPage extends Component {
     constructor() {
@@ -24,6 +25,13 @@ class LoginPage extends Component {
         }
 
         if (isInDb[0].name === name) {
+            const newUser = {
+                _id: isInDb[0]._id,
+                name: isInDb[0].name,
+                mail: isInDb[0].mail,
+                role: isInDb[0].role,
+            };
+            setCookie('login', JSON.stringify(newUser), 1);
             window.location.replace(`/single/${isInDb[0]._id}`);
             return null;
         }
@@ -44,22 +52,36 @@ class LoginPage extends Component {
         if (this.state.isChecked) {
             if (passAdmin === 'shlagLife') {
                 peopleDB.insert({
-                    name: this.nameInput.current.value,
-                    mail: this.mailInput.current.value,
+                    name: name,
+                    mail: mail,
                     role: 'ADMIN',
                 }, (error, response) => {
                     window.location.replace(`/single/${response}`);
+                    const newUser = {
+                        _id: response,
+                        name: name,
+                        mail: mail,
+                        role: 'USER'
+                    };
+                    setCookie('login', JSON.stringify(newUser), 1);
                 })
             }
             return null;
         }
 
         peopleDB.insert({
-            name: this.nameInput.current.value,
-            mail: this.mailInput.current.value,
+            name: name,
+            mail: mail,
             role: 'USER',
         }, (error, response) => {
             window.location.replace(`/single/${response}`);
+            const newUser = {
+                _id: response,
+                name: name,
+                mail: mail,
+                role: 'USER'
+            };
+            setCookie('login', JSON.stringify(newUser), 1);
         })
     }
 
