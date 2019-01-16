@@ -3,6 +3,7 @@ import peopleDB from '../../imports/db/peopleDB';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from "react-router-dom";
 import { getCookie } from '../helpers/utils.js';
+import LogoutBtn from '../components/LogoutBtn/LogoutBtn.js';
 
 class SinglePage extends Component {
     state = {
@@ -60,8 +61,9 @@ class SinglePage extends Component {
 
         return (
             <div name="hello">
-                <Link to='/'>Back home</Link>
+                {JSON.parse(getCookie('login')).role === "ADMIN" ? <Link to='/'>Back home</Link> : null }
                 {displayed}
+                <LogoutBtn />
             </div>
         )
     }
