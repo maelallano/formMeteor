@@ -22,7 +22,6 @@ export const getCookie = cname => {
 }
 
 export const deleteCookie = cname => {
-  console.log('oui');
   document.cookie = cname + "=" + ";" + 'expires=Thu, 01 Jan 1970 00:00:01 GMT;' + ";path=/";
   window.location.replace(`/login`);
 }

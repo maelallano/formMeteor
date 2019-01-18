@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import peopleDB from '../../imports/db/peopleDB';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from "react-router-dom";
-import { getCookie } from '../helpers/utils.js';
+import { getCookie, deleteCookie } from '../helpers/utils.js';
 import LogoutBtn from '../components/LogoutBtn/LogoutBtn.js';
 
 class SinglePage extends Component {
@@ -20,7 +20,12 @@ class SinglePage extends Component {
 
     handleClick = e => {
         peopleDB.remove(e);
-        window.location.replace('/');
+        if (JSON.parse(getCookie('login')).role === 'USER') {
+            deleteCookie('login');
+            window.location.replace('/login');
+            return;
+        }
+        this.props.history.push('/');
     }
 
     editValues = (e, DBmail, DBname) => {
@@ -61,12 +66,13 @@ class SinglePage extends Component {
             <button onClick={() => this.editValues(user._id)}>EDIT</button> 
             <button onClick={() => this.handleClick(user._id)}>REMOVE</button>
         </p> : <span>LOADING</span>
-
+        const notes = user ? <div>Notes</div> : null;
         return (
             <div name="hello">
                 {JSON.parse(getCookie('login')).role === "ADMIN" ? <Link to='/'>Back home</Link> : null }
                 {displayed}
-                <LogoutBtn />
+                {notes}
+                {JSON.parse(getCookie('login')).role === "USER" ? <LogoutBtn /> : null}
             </div>
         )
     }

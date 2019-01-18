@@ -36,6 +36,7 @@ class LoginPage extends Component {
                 name: isInDb[0].name,
                 mail: isInDb[0].mail,
                 role: isInDb[0].role,
+                notes: [],
             };
             setCookie('login', JSON.stringify(newUser), 1);
             window.location.replace(`/single/${isInDb[0]._id}`);
@@ -61,13 +62,15 @@ class LoginPage extends Component {
                     name: name,
                     mail: mail,
                     role: 'ADMIN',
+                    notes: [],
                 }, (error, response) => {
                     window.location.replace(`/single/${response}`);
                     const newUser = {
                         _id: response,
                         name: name,
                         mail: mail,
-                        role: 'USER'
+                        role: 'ADMIN',
+                        notes: [],
                     };
                     setCookie('login', JSON.stringify(newUser), 1);
                 })
@@ -79,13 +82,15 @@ class LoginPage extends Component {
             name: name,
             mail: mail,
             role: 'USER',
+            notes: [],
         }, (error, response) => {
             window.location.replace(`/single/${response}`);
             const newUser = {
                 _id: response,
                 name: name,
                 mail: mail,
-                role: 'USER'
+                role: 'USER',
+                notes: [],
             };
             setCookie('login', JSON.stringify(newUser), 1);
         })
