@@ -23,12 +23,15 @@ class SinglePage extends Component {
         window.location.replace('/');
     }
 
-    editValues = e => {
+    editValues = (e, DBmail, DBname) => {
+        const mail = this.state.name ? this.state.name : DBmail;
+        const name = this.state.name ? this.state.name : DBname;
+
         if (this.state.isEdit) {
             peopleDB.update(e, {
                 $set: {
-                        name: this.state.inputName,
-                        mail: this.state.inputMail
+                        name: this.state.inputName ? this.state.inputName : name,
+                        mail: this.state.inputMail ? this.state.inputMail : mail,
                     }
             })
         }
@@ -53,8 +56,8 @@ class SinglePage extends Component {
         const user = this.props.tasks.filter(task => task._id === this.props.match.params.id)[0];
         const displayed = user ? 
         <p key={user._id}>
-            Name: { this.state.isEdit ? <input onChange={this.nameInputChange} value={this.state.inputName}/> : this.state.inputName ? this.state.inputName : user.name }, 
-            Mail: { this.state.isEdit ? <input onChange={this.mailInputChange} value={this.state.inputMail}/> : this.state.inputMail ? this.state.inputMail : user.mail }, 
+            Name: { this.state.isEdit ? <input onChange={this.nameInputChange} value={this.state.inputName ? this.state.inputName : user.name}/> : this.state.inputName ? this.state.inputName : user.name }, 
+            Mail: { this.state.isEdit ? <input onChange={this.mailInputChange} value={this.state.inputMail ? this.state.inputMail : user.mail}/> : this.state.inputMail ? this.state.inputMail : user.mail }, 
             <button onClick={() => this.editValues(user._id)}>EDIT</button> 
             <button onClick={() => this.handleClick(user._id)}>REMOVE</button>
         </p> : <span>LOADING</span>
